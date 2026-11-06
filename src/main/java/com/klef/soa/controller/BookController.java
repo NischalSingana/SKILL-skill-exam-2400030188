@@ -15,6 +15,11 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @GetMapping("/")
+    public String home() {
+        return "Book Entity Project";
+    }
+
     @PostMapping("/insert")
     public Book insertBook(@RequestBody Book book) {
         return bookService.insertBook(book);

@@ -6,7 +6,7 @@ services:
     container_name: postgresdb
     restart: unless-stopped
     environment:
-      POSTGRES_USER: root
+      POSTGRES_USER: nischalsingana
       POSTGRES_PASSWORD: NISchal@2006
       POSTGRES_DB: skill-exam-2400030188
     ports:
@@ -32,7 +32,7 @@ services:
       - "9001:8001"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/skill-exam-2400030188
-      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_USERNAME: nischalsingana
       SPRING_DATASOURCE_PASSWORD: NISchal@2006
     depends_on:
       postgresdb:
