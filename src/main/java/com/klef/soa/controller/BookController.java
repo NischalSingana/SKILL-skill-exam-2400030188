@@ -9,7 +9,7 @@ import com.klef.soa.entity.Book;
 import com.klef.soa.service.BookService;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/")
 public class BookController {
 
     @Autowired
