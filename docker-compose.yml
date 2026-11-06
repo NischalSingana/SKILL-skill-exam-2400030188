@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root -d skill-exam-2400030188"]
+      test: ["CMD-SHELL", "pg_isready -U nischalsingana -d skill-exam-2400030188"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -29,7 +29,7 @@ services:
       dockerfile: Dockerfile
     container_name: exam-service
     ports:
-      - "9001:8001"
+      - "8001:8001"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/skill-exam-2400030188
       SPRING_DATASOURCE_USERNAME: nischalsingana

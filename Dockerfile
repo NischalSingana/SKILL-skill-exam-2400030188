@@ -17,8 +17,8 @@ WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
-# Copy built JAR from build stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy built JAR from build stage with correct ownership
+COPY --from=build --chown=spring:spring /app/target/*.jar app.jar
 
 # Expose Spring Boot port
 EXPOSE 8001
