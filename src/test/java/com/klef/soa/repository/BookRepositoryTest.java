@@ -46,72 +46,72 @@ public class BookRepositoryTest
         List<Book> books = repository.findAll();
         assertNotNull(books);
         assertFalse(books.isEmpty());
+        assertEquals(1, books.size());
         System.out.println("Total Books: " + books.size());
     }
 
     @Test
     void testFindBookById() 
     {
+        // Existing ID
         Optional<Book> book = repository.findById(bookId);
         assertTrue(book.isPresent());
         assertEquals(bookId, book.get().getBookId());
         System.out.println("Book ID: " + book.get().getBookId());
         System.out.println("Title: " + book.get().getTitle());
+
+        // Non-existing ID
+        Optional<Book> nonExistingBook = repository.findById(9999L);
+        assertFalse(nonExistingBook.isPresent());
+        System.out.println("Non-existing Book Present: " + nonExistingBook.isPresent());
     }
 
     @Test
-    void testFindBookByAuthor() 
+    void testFindByDerivedQuery() 
     {
         List<Book> books = repository.findByAuthor("Nischal");
         assertNotNull(books);
         assertFalse(books.isEmpty());
         assertEquals("Nischal", books.get(0).getAuthor());
-        System.out.println("Author: " + books.get(0).getAuthor());
-        System.out.println("Title: " + books.get(0).getTitle());
+        assertEquals("SOA", books.get(0).getTitle());
+        System.out.println("Book Author: " + books.get(0).getAuthor());
+        System.out.println("Book Title: " + books.get(0).getTitle());
     }
 
     @Test
-    void testFindBookByCategory() 
-    {
-        List<Book> books = repository.findByCategory("Technology");
-        assertNotNull(books);
-        assertFalse(books.isEmpty());
-        assertEquals("Technology", books.get(0).getCategory());
-        System.out.println("Category: " + books.get(0).getCategory());
-        System.out.println("Title: " + books.get(0).getTitle());
-    }
-
-    @Test
-    void testDatabaseConnection() 
+    void testCountBooks() 
     {
         long count = repository.count();
-        assertTrue(count >= 0);
+        assertTrue(count > 0);
+        assertEquals(1L, count);
         System.out.println("Total Books in Database: " + count);
     }
 
     @Test
-    void testBookDetails() 
+    void testEntityDetailsAndCategoryResult() 
     {
+        // Verify required properties are not null
         Optional<Book> book = repository.findById(bookId);
         assertTrue(book.isPresent());
         Book foundBook = book.get();
+
+        assertNotNull(foundBook.getBookId());
         assertNotNull(foundBook.getTitle());
         assertNotNull(foundBook.getAuthor());
         assertNotNull(foundBook.getPublisher());
         assertNotNull(foundBook.getCategory());
         assertTrue(foundBook.getPrice() > 0);
+
         System.out.println("Title: " + foundBook.getTitle());
         System.out.println("Author: " + foundBook.getAuthor());
         System.out.println("Publisher: " + foundBook.getPublisher());
         System.out.println("Category: " + foundBook.getCategory());
         System.out.println("Price: " + foundBook.getPrice());
-    }
 
-    @Test
-    void testTotalBookCount() 
-    {
-        long count = repository.count();
-        assertEquals(1L, count);
-        System.out.println("Total Books: " + count);
+        List<Book> categoryBooks = repository.findByCategory("Technology");
+        assertNotNull(categoryBooks);
+        assertFalse(categoryBooks.isEmpty());
+        assertEquals("SOA", categoryBooks.get(0).getCategory());
+        System.out.println("Total SOA Books: " + categoryBooks.size());
     }
 }
