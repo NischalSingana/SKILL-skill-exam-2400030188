@@ -23,7 +23,7 @@ services:
       - microservices-network
 
   exam-service:
-    image: nischalsingana/exam-service:latest
+    image: nischalsingana/docker-skill-exam-2400030188:latest
     build:
       context: .
       dockerfile: Dockerfile
